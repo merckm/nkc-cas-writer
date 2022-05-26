@@ -1,0 +1,9 @@
+# VSCode configuration stuff
+.VSCode
+
+# VASM output files
+*.bin
+*.lst
+*.dat
+*.cas
+
