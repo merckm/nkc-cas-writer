@@ -74,7 +74,7 @@ def main() -> int:
 
     symbolSection = False
     try:
-        with open(baseName+".lst", 'r', encoding='ASCII') as file:
+        with open(baseName+".lst", 'r') as file:
             for line in file:
                 if "Symbols:" in line:
                     symbolSection = True
