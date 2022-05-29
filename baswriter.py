@@ -1,0 +1,3 @@
+
+print = 0x95
+goto = 0x88
