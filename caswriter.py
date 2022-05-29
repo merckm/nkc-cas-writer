@@ -27,7 +27,7 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.gosi:
-        print("Runnin in GOSI Mode")
+        print("Running in GOSI Mode")
 
     if args.basic:
         logging.warning("BASIC Mode is still not implemented")
@@ -84,17 +84,19 @@ def main() -> int:
                         line = line[5:].lstrip()
                         lernmode = True
                     if (tokens[i].upper() in symbols) and not lernmode:
-                        foundTokens.append(tokens[i])
-                    # firstChar = tokens[i][0]
-                    # if (firstChar == '"' or firstChar == ':'):
-                    #     varName = ""
-                    #     for char in tokens[i][1:].upper():
-                    #         if char.isalpha():
-                    #             varName += char
-                    #     if not varName in symbols:
-                    #         symbols.append(varName)
-                    #         offsets.append(0)
-                    #         symtype.append(b'\x01')
+                        index = symbols.index(tokens[i].upper())
+                        if symtype[index] == b'\x02':
+                            foundTokens.append(tokens[i])
+                    firstChar = tokens[i][0]
+                    if (firstChar == '"' or firstChar == ':'):
+                        varName = ""
+                        for char in tokens[i][1:].upper():
+                            if char.isalpha():
+                                varName += char
+                        if not varName in symbols:
+                            symbols.append(varName)
+                            offsets.append(0)
+                            symtype.append(b'\x01')
                 # print(line, end='')
                 stringBytes = bytearray(line.rstrip(), encoding="ascii")
                 for sym in foundTokens:
@@ -208,6 +210,7 @@ def main() -> int:
     ])
 
     for index in range(len(symbols)):
+        print(symbols[index])
         symbolBytes = bytearray(symbols[index], encoding='ascii')
         symbolBytes[-1] |= 0x80
         symbolsString += symbolBytes
