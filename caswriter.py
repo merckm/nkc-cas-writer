@@ -17,12 +17,12 @@ def main() -> int:
     parser.add_argument("-n", "--name", type=str,
                         help="Name der Kasseten-Aufzeichnung, Default ist der Dateiname in Grossbuchtaben")
     parser.add_argument("-s", "--start",
-                        help="Start Addresse des Daten (default 0x8800)", type=int, default=0x8800)
+                        help="Start Addresse des Daten (default 0x8800)", type=lambda x: int(x, 0), default=0x8800)
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-g', "--gosi", action='store_true',
-                       help="GOSI Mode. Convertiere GOSI Datei, defaul is Assembler")
+                       help="GOSI Mode. Konvertiere GOSI Datei, defaul is Assembler")
     group.add_argument('-b', "--basic", action='store_true',
-                       help="BASIC Mode. Convertiere GOSI Datei, defaul is Assembler")
+                       help="BASIC Mode. Konvertiere BASIC Datei, defaul is Assembler")
 
     args = parser.parse_args()
 
@@ -141,7 +141,7 @@ def main() -> int:
         0x00, 0x24
     ])
 
-    if(not args.gosi and not args.baisc):
+    if(not args.gosi and not args.basic):
         symbolSection = False
         try:
             with open(baseName+".lst", 'r') as file:
@@ -152,6 +152,9 @@ def main() -> int:
                     if len(line.strip()) == 0:
                         symbolSection = False
                     if symbolSection:
+                        # ignore inner symbols starting with a dot
+                        if line[0] == ' ':
+                            continue
                         tokens = line.split()
                         if(tokens[-1] == 'ABS'):
                             try:
@@ -193,6 +196,11 @@ def main() -> int:
         if (args.gosi):
             nextSymbol += 1
 
+    sizeSymbols = nextSymbol-startSymboltabelle
+    if(sizeSymbols > 575):
+        logging.error(f'Symbol table is to big: {sizeSymbols} bytes!')
+        sys.exit(-1)
+
     endSymbols = nextSymbol.to_bytes(2, 'big')
     symCheck = startSymboltabelle
     symCheck += nextSymbol
@@ -210,7 +218,6 @@ def main() -> int:
     ])
 
     for index in range(len(symbols)):
-        print(symbols[index])
         symbolBytes = bytearray(symbols[index], encoding='ascii')
         symbolBytes[-1] |= 0x80
         symbolsString += symbolBytes
