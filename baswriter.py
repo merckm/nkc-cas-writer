@@ -1,4 +1,5 @@
 import logging
+from pickle import TRUE
 import sys
 from re import sub
 
@@ -6,7 +7,7 @@ keywords = ["END", "FOR", "NEXT", "DATA", "INPUT", "DIM", "READ", "LET", "GOTO",
             "IF", "RESTORE", "GOSUB", "RETURN", "REM", "STOP", "OUT", "ON", "NULL", "WAIT",
             "POKE", "PRINT", "DEF", "CONT", "LIST", "CLEAR", "CLOAD", "CSAVE", "NEW", "BYE",
             "LLIST", "LPRINT", "CALL", "CLRS", "MOVETO", "DRAWTO", "PAGE", "TAB", "TO",
-            "SPC", "FN", "TI$", "THEN", "NOT", "STEP", "+", "-", "*", "/", "^", "AND",
+            "SPC(", "FN", "TI$", "THEN", "NOT", "STEP", "+", "-", "*", "/", "^", "AND",
             "OR", ">", "=", "<", "SGN", "INT", "ABS", "USR", "FRE", "INP", "POS", "SQR",
             "RND", "LOG", "EXP", "COS", "SIN", "TAN", "ATN", "PEEK", "LEN", "STR$", "VAL",
             "ASC", "CHR$", "HEX", "LEFT$", "RIGHT$", "MID$", "?"]
@@ -22,7 +23,7 @@ def writeBas(basename):
             casLine = bytearray([])
 
             # skip empty lines
-            if (len(line) == 0):
+            if (len(line.rstrip()) == 0):
                 continue
 
             lineNumber = ""
@@ -36,10 +37,23 @@ def writeBas(basename):
                 linePos += 1
 
             if len(lineNumber) == 0:
-                print(f"Syntax error in Lline {line}, expected line number")
+                print(
+                    f"Syntax error in Line {line.rstrip()}, expected line number")
 
             lineNum = int(lineNumber)
             casLine += lineNum.to_bytes(2, 'little')
+
+            literals = {}
+            startPos = 0
+            while startPos >= 0:
+                startPos = line.find("\"", startPos)
+                if startPos >= 0:
+                    endPos = line.find("\"", startPos+1)
+                    if endPos == -1:
+                        print(
+                            f"Syntax error in Line {line.rstrip()}, unclosd quotes")
+                    literals[startPos] = endPos
+                    startPos = endPos+1
 
             # Create a dictonary of all occurances of BASIC Keywords
             # Some Keywords are substrings of other keywords (e.f. INP from INPUT)
@@ -52,8 +66,15 @@ def writeBas(basename):
                 while keyword in codeLine:
                     pos = codeLine.find(keyword)
                     char = 0x80 + keywords.index(keyword)
-                    if(not(pos in keysDict)):
+                    valid = True
+                    for pos1 in literals:
+                        if pos+posOffset >= pos1 and pos+posOffset <= literals[pos1]:
+                            valid = False
+                    if(valid and not(pos in keysDict)):
                         keysDict[pos+posOffset] = keyword
+                    if not valid:
+                        logging.debug(
+                            f"Invalid keyword {keyword} at pos {pos}")
                     codeLine = codeLine[pos+len(keyword):]
                     posOffset = posOffset+pos+len(keyword)
 
