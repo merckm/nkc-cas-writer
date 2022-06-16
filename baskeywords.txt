@@ -1,0 +1,172 @@
+
+"cont" = 0x97
+"list" = 0x98
+"llist = 0x9E
+"new" = 0x9C
+"run" = 0x89
+
+"call" = 0xA0
+"clear" = 0x99
+"csave" = 0x9B
+"cload" = 0x9A
+"data" = 0x83
+"def" = 0x96
+
+"fn" = 0xA8
+"end" = 0x80
+
+"dim" = 0x85
+"for" = 0x81
+"end" = 0x80
+"gosub" = 0x8C
+"goto" = 0x88
+"if" = 0x8A
+"input" = 0x84
+"let" = 0x87
+"lprint" = 0x0F
+"next" = 0x82
+"null 0x92
+"on" = 0x91
+"out" = 0x90
+"poke" = 0x94
+"print = ?" = 0x95
+"read" = 0x86
+"rem" = 0x8E
+"restore" = 0x8B
+"return" = 0x8D
+"step" = 0xAC
+"stop" = 0x8F
+"then" = 0xAA
+"to" = 0xA6
+"wait" = 0x93
+
+"clrs" = 0xA1
+"moveto" = 0xA2
+"drawto" = 0xA3
+"page" = 0xA4
+
+"and" = 0xB2
+"not" = 0xAB
+"or" = 0xB3
+
+"+" = 0xAD
+"-" = 0xAE
+"*" = 0xAF
+"/" = 0xB0
+"=" = 0xB5
+"<" = 0xB6
+">" = 0xB4
+
+"fre()" = 0xBB
+"inp()" = 0xBC
+"peek()" = 0xC6
+"pos()" = 0xBD
+"usr()" = 0XBA
+
+"asc()" = 0xCA
+"chr$()" = 0xCB
+"hex()" = 0xCC
+"left$()" = 0xCD
+"len()" = 0xC7
+"mid$()" = 0xCF
+"right$()" = 0xCE
+"spc()" = 0xA7
+"str$()" = 0xC8
+"tab()" = 0xA5
+"val()" = 0xC9
+
+"abs()" = 0xB9
+"atn()" = 0xC5
+"cos()" = 0xC2
+"exp()" = 0xC1
+"int()" = 0xB8
+"log()" = 0xC0
+"rnd()" = 0xBF
+"sin()" = 0xC3
+"sqr()" = 0xB2
+"tan()" = 0xC4
+
+####################################################################
+####################################################################
+
+"END" = 0X80
+"FOR" = 0X81
+"NEXT" = 0X82
+"DATA" = 0X83
+"INPUT" = 0X84
+"DIM" = 0X85
+"READ" = 0X86
+"LET" = 0X87
+"GOTO" = 0X88
+"RUN" = 0X89
+"IF" = 0X8A
+"RESTORE" = 0X8B
+"GOSUB" = 0X8C
+"RETURN" = 0X8D
+"REM" = 0X8E
+"STOP" = 0X8F
+"OUT" = 0X90
+"ON" = 0X91
+"NULL" = 0X92
+"WAIT" = 0X93
+"POKE" = 0X94
+"PRINT" = 0X95
+"DEF" = 0X96
+"CONT" = 0X97
+"LIST" = 0X98
+"CLEAR" = 0X99
+"CLOAD" = 0X9A
+"CSAVE" = 0X9B
+"NEW" = 0X9C
+"BYE" = 0X9D
+"LLIST" = 0X9E
+"LPRINT" = 0X9F
+"CALL" = 0XA0
+"CLRS" = 0XA1
+"MOVETO" = 0XA2
+"DRAWTO" = 0XA3
+"PAGE" = 0XA4
+"TAB" = 0XA5
+"TO" = 0XA6
+"SPC" = 0XA7
+"FN" = 0XA8
+"TI$" = 0XA9
+"THEN" = 0XAA
+"NOT" = 0XAB
+"STEP" = 0XAC
+"+" = 0XAD
+"-" = 0XAE
+"*" = 0XAF
+"/" = 0XB0
+"^" = 0XB1
+"AND" = 0XB2
+"OR" = 0XB3
+">" = 0XB4
+"=" = 0XB5
+"<" = 0XB6
+"SGN" = 0XB7
+"INT" = 0XB8
+"ABS" = 0XB9
+"USR" = 0XBA
+"FRE" = 0XBB
+"INP" = 0XBC
+"POS" = 0XBD
+"SQR" = 0XBE
+"RND" = 0XBF
+"LOG" = 0XC0
+"EXP" = 0XC1
+"COS" = 0XC2
+"SIN" = 0XC3
+"TAN" = 0XC4
+"ATN" = 0XC5
+"PEEK" = 0XC6
+"LEN" = 0XC7
+"STR$" = 0XC8
+"VAL" = 0XC9
+"ASC" = 0XCA
+"CHR$" = 0XCB
+"HEX" = 0XCC
+"LEFT$" = 0XCD
+"RIGHT$" = 0XCE
+"MID$" = 0XCF
+"?" = 0X95

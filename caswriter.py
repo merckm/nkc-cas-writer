@@ -6,6 +6,7 @@ import argparse
 import logging
 import tokenize
 from pathlib import Path
+from baswriter import writeBas
 
 
 def main() -> int:
@@ -27,11 +28,10 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.gosi:
-        print("Running in GOSI Mode")
+        logging.info("Running in GOSI Mode")
 
     if args.basic:
-        logging.warning("BASIC Mode is still not implemented")
-        sys.exit(1)
+        logging.info("Running in BASIC Mode")
 
     baseName = Path(args.filename).stem
     recordingName = baseName.upper()
@@ -40,6 +40,11 @@ def main() -> int:
 
     print(f"Converting file:      {args.filename}")
     print(f"Writing file:         {baseName+'.cas'}")
+
+    if args.basic:
+        writeBas(baseName)
+        sys.exit(0)
+
     print(f"Using recording name: {recordingName}")
 
     symbols = []
