@@ -6,10 +6,13 @@ import argparse
 import logging
 import tokenize
 from pathlib import Path
-from baswriter import writeBas
+import baswriter
 
 
 def main() -> int:
+
+    #    logging.basicConfig(filename='caswriter.log',
+    #                        format='%(asctime)s %(message)s', level=logging.DEBUG)
 
     # parse arguments
     parser = argparse.ArgumentParser()
@@ -42,7 +45,7 @@ def main() -> int:
     print(f"Writing file:         {baseName+'.cas'}")
 
     if args.basic:
-        writeBas(baseName)
+        baswriter.writeBas(baseName)
         sys.exit(0)
 
     print(f"Using recording name: {recordingName}")

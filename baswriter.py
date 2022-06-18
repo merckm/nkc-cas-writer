@@ -6,7 +6,7 @@ from re import sub
 keywords = ["END", "FOR", "NEXT", "DATA", "INPUT", "DIM", "READ", "LET", "GOTO", "RUN",
             "IF", "RESTORE", "GOSUB", "RETURN", "REM", "STOP", "OUT", "ON", "NULL", "WAIT",
             "POKE", "PRINT", "DEF", "CONT", "LIST", "CLEAR", "CLOAD", "CSAVE", "NEW", "BYE",
-            "LLIST", "LPRINT", "CALL", "CLRS", "MOVETO", "DRAWTO", "PAGE", "TAB", "TO",
+            "LLIST", "LPRINT", "CALL", "CLRS", "MOVETO", "DRAWTO", "PAGE", "TAB(", "TO",
             "SPC(", "FN", "TI$", "THEN", "NOT", "STEP", "+", "-", "*", "/", "^", "AND",
             "OR", ">", "=", "<", "SGN", "INT", "ABS", "USR", "FRE", "INP", "POS", "SQR",
             "RND", "LOG", "EXP", "COS", "SIN", "TAN", "ATN", "PEEK", "LEN", "STR$", "VAL",
@@ -65,17 +65,19 @@ def writeBas(basename):
                 posOffset = 0
                 while keyword in codeLine:
                     pos = codeLine.find(keyword)
+                    logging.debug("Found Keyword %s at pos: %d", keyword, pos)
                     char = 0x80 + keywords.index(keyword)
                     valid = True
                     for pos1 in literals:
                         if pos+posOffset >= pos1 and pos+posOffset <= literals[pos1]:
                             valid = False
-                    if(valid and not(pos in keysDict)):
+                    if(valid and not(pos+posOffset in keysDict)):
                         keysDict[pos+posOffset] = keyword
                     if not valid:
                         logging.debug(
                             f"Invalid keyword {keyword} at pos {pos}")
                     codeLine = codeLine[pos+len(keyword):]
+                    logging.debug(codeLine)
                     posOffset = posOffset+pos+len(keyword)
 
             logging.debug(keysDict)
